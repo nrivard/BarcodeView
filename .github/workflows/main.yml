@@ -12,7 +12,7 @@ jobs:
 
     steps:
     - name: Checkout
-    - uses: actions/checkout@v2
+      uses: actions/checkout@v2
     - name: Generate Xcode Project
       run: swift package generate-xcodeproj
     - name: Build and Test

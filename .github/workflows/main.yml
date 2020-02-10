@@ -15,7 +15,7 @@ jobs:
     - name: Generate Xcode Project
       run: swift package generate-xcodeproj
     - name: Build and Test
-      run: xcodebuild clean test -destination "${destination}" -scheme 'BarcodeView-Package' ONLY_ACTIVE_ARCH=NO
+      run: xcodebuild clean test -destination "${destination}" -scheme 'BarcodeView-Package' enableCodeCoverage=YES ONLY_ACTIVE_ARCH=NO
       env: 
         destination: ${{ matrix.destination }}
     - name: Generate Code Coverage

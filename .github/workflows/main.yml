@@ -18,4 +18,8 @@ jobs:
       run: xcodebuild clean test -destination "${destination}" -scheme 'BarcodeView-Package' ONLY_ACTIVE_ARCH=NO
       env: 
         destination: ${{ matrix.destination }}
-      
+    - name: Generate Code Coverage
+    - uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        fail_ci_if_error: true

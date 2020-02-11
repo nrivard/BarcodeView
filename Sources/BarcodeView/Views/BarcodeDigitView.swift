@@ -7,23 +7,23 @@
 
 import SwiftUI
 
-struct BarcodeDigitView: View {
+struct BarcodeDigitView: Shape {
 
     @State var bars: BarcodeDigit.BarRepresentation
     @Environment(\.barWidth) var barWidth: CGFloat
 
-    var body: some View {
-        HStack(spacing: 0) {
-            ForEach(0..<bars.count) { index in
-                Group {
-                    if self.bars[index] == .black {
-                        Rectangle().fill()
-                    } else {
-                        Spacer()
-                    }
-                }
-                .frame(width: self.barWidth)
-            }
-        }
+    func path(in rect: CGRect) -> Path {
+        var  path = Path()
+
+        let size: CGSize = .init(width: barWidth, height: rect.height)
+
+        let rects = bars
+            .enumerated()
+            .filter { $0.1 }
+            .map { CGRect(origin: .init(x: barWidth * CGFloat($0.0), y: 0), size: size) }
+
+        path.addRects(rects)
+
+        return path
     }
 }

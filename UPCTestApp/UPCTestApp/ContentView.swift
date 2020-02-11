@@ -13,7 +13,7 @@ struct ContentView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            BarcodeView(BarcodeFactory.barcode(from: "302993918288")!)
+            BarcodeView(BarcodeFactory.barcode(from: "302993918288")!, showText: false)
                 .frame(height: 60)
                 .environment(\.barWidth, 1)
 

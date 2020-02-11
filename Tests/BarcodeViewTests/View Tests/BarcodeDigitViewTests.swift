@@ -25,23 +25,17 @@ final class BarcodeDigitViewTests: XCTestCase {
     }
 
     private func test(digit: BarcodeDigit) throws {
-        let bars = try BarcodeDigit.endcap.representation()
+        let bars = try digit.representation()
 
-        let forEachInspection = try BarcodeDigitView(bars: bars)
+        let path = try BarcodeDigitView(bars: bars)
             .inspect()
-            .hStack()
-            .forEach(0)
+            .shape()
+            .path(in: .init(x: 0, y: 0, width: CGFloat(bars.count) * BarWidthEnvironmentKey.defaultValue, height: 1))
 
-        XCTAssertEqual(forEachInspection.underestimatedCount, bars.count)
-
-        for index in 0..<forEachInspection.underestimatedCount {
-            let groupInspection = try forEachInspection.group(index)
-
-            if bars[index] {
-                XCTAssertNoThrow(try groupInspection.shape(0))
-            } else {
-                XCTAssertNoThrow(try groupInspection.spacer(0))
-            }
+        bars.enumerated().filter({ $0.1 }).forEach {
+            let xOffset = CGFloat($0.0) * BarWidthEnvironmentKey.defaultValue
+            let point = CGPoint(x: xOffset, y: 0)
+            XCTAssertTrue(path.contains(point))
         }
     }
 }

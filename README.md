@@ -88,7 +88,6 @@ In addition, `BarcodeView` supports light and dark modes, but if you care about 
 Create an issue and submit a PR against that issue. Areas I would love to see improved are:
 
  * Add support for additional barcodes, like EAN8 and UPC-E
- *  Convert `BarcodeDigitView` to a more complex `Path` based view. Right now `BarcodeView` has a large underlying `UIView` footprint
  * Improve numeric text value display by properly masking the underlying `BarcodeBarView`, drawing around the end and midcaps, etc.
 
 ## Have questions?

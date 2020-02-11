@@ -10,6 +10,7 @@ import SwiftUI
 struct BarcodeBarView: View {
 
     private let digits: [BarcodeDigit]
+    @Environment(\.barWidth) var barWidth: CGFloat
 
     init(digits: [BarcodeDigit]) {
         self.digits = digits
@@ -20,6 +21,7 @@ struct BarcodeBarView: View {
             ForEach(0..<digits.count) { index in
                 (try? self.digits[index].representation()).map { representation in
                     BarcodeDigitView(bars: representation)
+                        .frame(width: CGFloat(representation.count) * self.barWidth)
                 }
             }
         }

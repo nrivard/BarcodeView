@@ -34,6 +34,7 @@ struct BarcodeTextView: View {
             Text(verbatim: barcode.checksumDigit).font(font)
                 .accessibility(hidden: true)
         }
+        .fixedSize()
     }
 }
 

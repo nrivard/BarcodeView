@@ -45,7 +45,7 @@ extension BarcodeTextView {
         if barWidth > 1 {
             return Font.body.monospacedDigit()
         } else {
-            return Font.system(size: 9).monospacedDigit()
+            return Font.system(size: 12).monospacedDigit()
         }
     }
 }

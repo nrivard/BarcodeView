@@ -30,7 +30,7 @@ public struct BarcodeView: View {
                         BarcodeTextView(self.barcode)
                     }
                 }
-                .offset(x: 0, y: barWidth > 1 ? 20 : 10),
+                .offset(x: 0, y: barWidth > 1 ? 20 : 14),
                 alignment: .bottom
             )
     }

@@ -7,7 +7,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        destination: ['platform=iOS Simulator,OS=13.3,name=iPhone 11', 'platform=tvOS Simulator,OS=13.3,name=Apple TV 4K', 'platform=OS X']
+        destination: ['platform=iOS Simulator,name=iPhone 12', 'platform=tvOS Simulator,name=Apple TV 4K', 'platform=OS X']
 
     steps:
     - name: Checkout

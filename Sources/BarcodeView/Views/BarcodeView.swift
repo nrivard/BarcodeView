@@ -40,7 +40,6 @@ public struct BarcodeView: View {
                         }
                     }
                 }
-
                 .onPreferenceChange(HeightPreference.self) {
                     textHeight = $0
                 }

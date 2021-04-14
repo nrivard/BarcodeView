@@ -12,3 +12,4 @@ extension BarcodeView: Inspectable { }
 extension BarcodeBarView: Inspectable { }
 extension BarcodeTextView: Inspectable { }
 extension BarcodeDigitView: Inspectable { }
+extension BarcodeLabel: Inspectable { }

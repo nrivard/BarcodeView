@@ -34,28 +34,8 @@ struct BarcodeBarView: View {
                                     return .init()
                             }
                         }
-                        .landmarkAlignmentGuide(digits[index], index: index)
                 }
             }
-        }
-    }
-}
-
-extension View {
-
-    @ViewBuilder
-    func landmarkAlignmentGuide(_ digit: BarcodeDigit, index: Int) -> some View {
-        switch digit {
-            case .endcap where index == 0:
-                self.alignmentGuide(.startLandmark, computeValue: { dimension in
-                    dimension[.leading]
-                })
-            case .endcap:
-                self.alignmentGuide(.endLandmark, computeValue: { dimension in
-                    dimension[.trailing]
-                })
-            default:
-                self
         }
     }
 }

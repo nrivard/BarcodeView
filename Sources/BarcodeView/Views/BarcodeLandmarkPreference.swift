@@ -60,27 +60,3 @@ extension BarcodeLandmarkPreference.Landmarks {
         )
     }
 }
-
-extension HorizontalAlignment {
-
-    private enum LandmarkStartAlignment: AlignmentID {
-        static func defaultValue(in context: ViewDimensions) -> CGFloat {
-            return context[.leading]
-        }
-    }
-
-    private enum LandmarkMiddleAlignment: AlignmentID {
-        static func defaultValue(in context: ViewDimensions) -> CGFloat {
-            return context[HorizontalAlignment.center]
-        }
-    }
-
-    private enum LandmarkEndAlignment: AlignmentID {
-        static func defaultValue(in context: ViewDimensions) -> CGFloat {
-            return context[.trailing]
-        }
-    }
-
-    static let startLandmark = HorizontalAlignment(LandmarkStartAlignment.self)
-    static let endLandmark = HorizontalAlignment(LandmarkEndAlignment.self)
-}

@@ -44,7 +44,7 @@ extension BarcodeLandmarkPreference.Landmarks {
         return .init(
             x: proxy[start].maxX,
             y: proxy[start].maxY - (textHeight / 2),
-            width: proxy[middle].minX - proxy[start].maxX,
+            width: proxy[middle].minX - proxy[start].maxX + 1, // this is 1 pixel too small from the landmarks so add 1
             height: textHeight
         )
     }
@@ -53,7 +53,7 @@ extension BarcodeLandmarkPreference.Landmarks {
         guard let end = end, let middle = middle else { return .zero }
 
         return .init(
-            x: proxy[middle].maxX,
+            x: proxy[middle].maxX - 1,  // this is 1 pixel too far to the right so subtract 1
             y: proxy[end].maxY - (textHeight / 2),
             width: proxy[end].minX - proxy[middle].maxX,
             height: textHeight

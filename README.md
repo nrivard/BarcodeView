@@ -1,6 +1,6 @@
 # BarcodeView
 
-**BarcodeView** is a beautiful and simple to use SwiftUI barcode view for Apple platforms. It really is SwiftUI which means you can use it like you expect. 
+**BarcodeView** is a beautiful and simple to use SwiftUI barcode view for Apple platforms.
 
 ## Getting Started
 
@@ -88,7 +88,7 @@ In addition, `BarcodeView` supports light and dark modes, but if you care about 
 Create an issue and submit a PR against that issue. Areas I would love to see improved are:
 
  * Add support for additional barcodes, like EAN8 and UPC-E
- * Improve numeric text value display by properly masking the underlying `BarcodeBarView`, drawing around the end and midcaps, etc.
+ * Simplify the cutout and text display code
 
 ## Have questions?
 

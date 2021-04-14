@@ -12,6 +12,7 @@ public struct BarcodeView: View {
     private let barcode: Barcode
 
     @State private var showText: Bool
+    @State private var textHeight: CGFloat = 0
     @Environment(\.barWidth) private var barWidth: CGFloat
 
     public init(_ barcode: Barcode, showText: Bool = true) {
@@ -20,19 +21,40 @@ public struct BarcodeView: View {
     }
 
     public var body: some View {
-        BarcodeBarView(digits: barcode.digits)
-            .accessibility(addTraits: accessibilityTraits)
-            .accessibility(value: Text(verbatim: barcode.value))
-            .accessibility(label: Text(barcode.accessibilityLabel))
-            .overlay(
-                Group {
-                    if self.showText {
-                        BarcodeTextView(self.barcode)
+        HStack(alignment: .bottom, spacing: barWidth * 2) {
+            if showText {
+                BarcodeLabel(barcode.prefix)
+                    .alignmentGuide(.bottom, computeValue: { dimension in
+                        dimension[.bottom] - (textHeight / 2)
+                    })
+            }
+
+            BarcodeBarView(digits: barcode.digits)
+                .overlayPreferenceValue(BarcodeLandmarkPreference.self) { landmarks in
+                    if showText {
+                        GeometryReader { proxy in
+                            ZStack {
+                                BarcodeCutout(landmarks: landmarks, height: textHeight, proxy: proxy)
+                                BarcodeTextView(barcode, landmarks: landmarks, height: textHeight, proxy: proxy)
+                            }
+                        }
                     }
                 }
-                .offset(x: 0, y: barWidth > 1 ? 20 : 14),
-                alignment: .bottom
-            )
+                .onPreferenceChange(HeightPreference.self) {
+                    textHeight = $0
+                }
+                .compositingGroup()
+
+            if showText {
+                BarcodeLabel(barcode.checksumDigit)
+                    .alignmentGuide(.bottom, computeValue: { dimension in
+                        dimension[.bottom] - (textHeight / 2)
+                    })
+            }
+        }
+        .accessibility(addTraits: accessibilityTraits)
+        .accessibility(value: Text(verbatim: barcode.value))
+        .accessibility(label: Text(barcode.accessibilityLabel))
     }
 }
 

@@ -10,7 +10,7 @@ final class AccessiblityTests: XCTestCase {
 
         let upcViewInspection = try BarcodeView(upc)
             .inspect()
-            .view(BarcodeBarView.self)
+            .hStack()
 
         XCTAssertEqual(try upcViewInspection.accessibilityLabel().string(), upc.accessibilityLabel)
         XCTAssertEqual(try upcViewInspection.accessibilityValue().string(), upc.value)
@@ -22,7 +22,7 @@ final class AccessiblityTests: XCTestCase {
 
         let upcViewInspection = try BarcodeView(upc)
             .inspect()
-            .view(BarcodeBarView.self)
+            .hStack()
 
         XCTAssertEqual(try upcViewInspection.accessibilityLabel().string(), upc.accessibilityLabel)
         XCTAssertEqual(try upcViewInspection.accessibilityValue().string(), upc.value)

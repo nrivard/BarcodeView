@@ -8,37 +8,55 @@
 import SwiftUI
 
 struct BarcodeTextView: View {
-    private let barcode: BarcodeDisplaying
+    private let barcode: Barcode
+    private let landmarks: BarcodeLandmarkPreference.Landmarks
+    private let height: CGFloat
+    private let proxy: GeometryProxy
 
-    @Environment(\.barWidth) private var barWidth: CGFloat
-
-    init(_ barcode: BarcodeDisplaying) {
+    init(_ barcode: Barcode, landmarks: BarcodeLandmarkPreference.Landmarks, height: CGFloat, proxy: GeometryProxy) {
         self.barcode = barcode
+        self.landmarks = landmarks
+        self.height = height
+        self.proxy = proxy
     }
 
     var body: some View {
-        HStack(spacing: barWidth * 2) {
-            Text(verbatim: barcode.prefix).font(font)
-                .accessibility(hidden: true)
-            
-            Spacer()
-            
-            Text(verbatim: barcode.centerLeadingGroup).font(font)
-                .accessibility(hidden: true)
-            
-            Text(verbatim: barcode.centerTrailingGroup).font(font)
-                .accessibility(hidden: true)
-            
-            Spacer()
-            
-            Text(verbatim: barcode.checksumDigit).font(font)
-                .accessibility(hidden: true)
+        let centerLeadingGroupFrame = landmarks.centerLeadingGroupFrame(in: proxy, textHeight: height)
+        let centerTrailingGroupFrame = landmarks.centerTrailingGroupFrame(in: proxy, textHeight: height)
+
+        Group {
+            BarcodeLabel(barcode.centerLeadingGroup)
+                .offset(x: centerLeadingGroupFrame.origin.x, y: centerLeadingGroupFrame.origin.y)
+                .frame(width: centerLeadingGroupFrame.size.width, height: centerLeadingGroupFrame.size.height)
+
+            BarcodeLabel(barcode.centerTrailingGroup)
+                .offset(x: centerTrailingGroupFrame.origin.x, y: centerTrailingGroupFrame.origin.y)
+                .frame(width: centerTrailingGroupFrame.size.width, height: centerTrailingGroupFrame.size.height)
         }
-        .fixedSize()
     }
 }
 
-extension BarcodeTextView {
+struct BarcodeLabel: View {
+    private let value: String
+    @Environment(\.barWidth) private var barWidth: CGFloat
+
+    init(_ value: String) {
+        self.value = value
+    }
+
+    var body: some View {
+        Text(verbatim: value)
+            .font(font)
+            .accessibility(hidden: true)
+            .background(
+                GeometryReader { proxy in
+                    Color.clear
+                        .anchorPreference(key: HeightPreference.self, value: .bounds) {
+                            proxy[$0].height
+                        }
+                }
+            )
+    }
 
     /// creates an appropriately sized font for the current `barWidth`.
     private var font: Font {

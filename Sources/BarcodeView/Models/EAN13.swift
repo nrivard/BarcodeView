@@ -70,16 +70,18 @@ extension EAN13 {
 
         return digits
     }
-
+    
     private static func verifyChecksumDigit(value: String) -> Bool {
-        let digits = value.map { Int(String($0))! }.dropLast()
-
-        let odd = stride(from: 1, to: digits.count, by: 2).map { digits[$0] }.reduce(0, +) * 3
-        let even = stride(from: 0, to: digits.count, by: 2).map { digits[$0] }.reduce(0, +)
-
-        let calculatedChecksum = 10 - ((odd + even) % 10)
-
-        return String(calculatedChecksum) == value.last.map({ String($0) })
+        let digits = value.compactMap { Int(String($0)) }
+        let lastDigit = digits.last!
+        
+        let evenSum = stride(from: 1, to: digits.count - 1, by: 2).map { digits[$0] }.reduce(0, +) * 3
+        let oddSum = stride(from: 0, to: digits.count - 1, by: 2).map { digits[$0] }.reduce(0, +)
+        let totalSum = evenSum + oddSum
+    
+        let calculatedCheckDigit = totalSum % 10 == 0 ? 0 : 10 - totalSum % 10
+    
+        return calculatedCheckDigit == lastDigit
     }
 }
 
